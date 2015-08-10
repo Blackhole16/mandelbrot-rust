@@ -6,15 +6,20 @@ use image::ImageBuffer;
 use std::fs::File;
 
 fn main() {
-    const ITERATIONS: i32 = 10000;
+    const ITERATIONS: i32 = 100000;
 
-    const RSTART: f64 = -2f64;
-    const REND: f64 = 2f64;
-    const ISTART: f64 = -1.5;
-    const IEND: f64 = 1.5;
+    const RSTART: f64 = -2.2f64;
+    const REND: f64 = 1.2f64;
+    const RDIFF: f64 = REND - RSTART;
+    //const ISTART: f64 = -1;
+    //const IEND: f64 = 1;
+    
+    const IDIFF: f64 = RDIFF*9f64/16f64;
+    const IEND: f64 = IDIFF/2f64;
+    const ISTART: f64 = -IEND;
 
-    const WIDTH: i32 = 1600;
-    const HEIGHT: i32 = 1200;
+    const WIDTH: i32 = 1920;
+    const HEIGHT: i32 = 1080;
 
     const RD: f64 = (REND - RSTART) / WIDTH as f64;
     const ID: f64 = (IEND - ISTART) / HEIGHT as f64;
@@ -28,7 +33,7 @@ fn main() {
             let mut z = zero;
             for i in 0..ITERATIONS {
                 z = z*z + c;
-                if z.norm_sqr() >= 2500f64 {
+                if z.norm_sqr() >= 10000f64 {
                     arr[y as usize][x as usize] = i;
                     break;
                 }
@@ -40,14 +45,12 @@ fn main() {
         let id = i / ITERATIONS as f64;
         let ir = id.powf(0.1);
         let ic = ir * 255f64;
-        let r = (x as f64) / (WIDTH as f64) * 255f64;
-        let g = (y as f64) / (HEIGHT as f64) * 255f64;
-        image::Rgb([r as u8, g as u8, ic as u8]) 
+        image::Luma([ic as u8]) 
     });
 
     // Save the image as “fractal.png”
     let mut file = File::create("fractal.png").unwrap();
 
     // We must indicate the image’s color type and what format to save as
-    image::ImageRgb8(imgbuf).save(&mut file, image::PNG);
+    image::ImageLuma8(imgbuf).save(&mut file, image::PNG);
 }
