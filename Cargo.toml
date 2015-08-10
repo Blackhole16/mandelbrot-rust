@@ -1,0 +1,8 @@
+[package]
+name = "mandelbrot"
+version = "0.1.0"
+authors = ["Blackhole16 <Blackhole16@web.de>"]
+
+[dependencies]
+num = "0.1.25"
+image = "*"
