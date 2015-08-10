@@ -10,8 +10,8 @@ fn main() {
 
     const RSTART: f64 = -2f64;
     const REND: f64 = 2f64;
-    const ISTART: f64 = 1.5;
-    const IEND: f64 = -1.5;
+    const ISTART: f64 = -1.5;
+    const IEND: f64 = 1.5;
 
     const WIDTH: i32 = 800;
     const HEIGHT: i32 = 600;
@@ -25,12 +25,13 @@ fn main() {
     for y in 0..HEIGHT {
         println!("{}",y);
         for x in 0..WIDTH {
-            let c = Complex::new((x as f64)*RD, (y as f64)*ID);
+            let c = Complex::new((x as f64)*RD + RSTART, (y as f64)*ID + ISTART);
             let mut z = zero;
             for i in 0..ITERATIONS {
                 z = z*z + c;
                 if z.norm_sqr() >= 2500.0f64 {
                     arr[y as usize][x as usize] = i;
+                    break;
                 }
             }
         }
