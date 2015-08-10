@@ -19,7 +19,7 @@ fn main() {
     const RD: f64 = (REND - RSTART) / WIDTH as f64;
     const ID: f64 = (IEND - ISTART) / HEIGHT as f64;
 
-    let mut arr = [[ITERATIONS; WIDTH as usize]; HEIGHT as usize];
+    let mut arr = Box::new([[0; WIDTH as usize]; HEIGHT as usize]);
     let zero = Complex::new(0.0, 0.0);
 
     for y in 0..arr.len() {
